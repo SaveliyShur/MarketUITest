@@ -5,6 +5,9 @@ using System.Text;
 
 namespace MarketUITest.ServerConnect
 {
+    /// <summary>
+    /// Класс для работы с сервером приложения
+    /// </summary>
     public class APIServer
     {
         private const string host = "127.0.0.1";
@@ -13,13 +16,26 @@ namespace MarketUITest.ServerConnect
         static NetworkStream stream;
         int deley = 2000;
 
+        /// <summary>
+        /// Работа с сервером приложения
+        /// </summary>
+        /// <param name="del">Время ожидания ответов от сервера</param>
         public APIServer(int del)
         {
             deley = del;
         }
 
+        /// <summary>
+        /// Работа с сервером приложения
+        /// </summary>
+        /// <remarks>Время ожидания ответа 2 секунды</remarks>
         public APIServer() { }
 
+        /// <summary>
+        /// Удаление продукта
+        /// </summary>
+        /// <param name="name">Имя продукта</param>
+        /// <param name="price">Цена продукта</param>
         public void delete(string name, string price)
         {
             client.Connect(host, port);
@@ -30,6 +46,10 @@ namespace MarketUITest.ServerConnect
             stream.Write(data, 0, data.Length);
         }
 
+        /// <summary>
+        /// Возвращает нужную часть сообщения от сервера
+        /// </summary>
+        /// <returns>True - все ОК, иначе False</returns>
         public string ReceiveMessage()
         {
             string[] answer = GetMessage().Trim().Split(':');
@@ -40,6 +60,10 @@ namespace MarketUITest.ServerConnect
             return answer[1].Trim();
         }
 
+        /// <summary>
+        /// Возвращает полное сообщение от сервера, ждет сообщения в течении времени определенного deley
+        /// </summary>
+        /// <returns>Полное сообщение</returns>
         private string GetMessage()
         {
             DateTime startTime = DateTime.Now;
@@ -71,6 +95,9 @@ namespace MarketUITest.ServerConnect
             }
         }
 
+        /// <summary>
+        /// Выполняет закрытие соединения с сервером
+        /// </summary>
         public void Disconnect()
         {
             if (stream != null)
