@@ -20,7 +20,7 @@ namespace MarketUITest.ServerConnect
         /// Работа с сервером приложения
         /// </summary>
         /// <param name="del">Время ожидания ответов от сервера</param>
-        public APIServer(int del)
+        public APIServer(int del) 
         {
             deley = del;
         }
