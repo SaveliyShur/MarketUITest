@@ -12,7 +12,7 @@ namespace MarketUITest.ServerConnect
     {
         private const string host = "127.0.0.1";
         private const int port = 8888;
-        static TcpClient client = new TcpClient();
+        TcpClient client;
         static NetworkStream stream;
         int deley = 2000;
 
@@ -23,13 +23,17 @@ namespace MarketUITest.ServerConnect
         public APIServer(int del)
         {
             deley = del;
+            client = new TcpClient();
         }
 
         /// <summary>
         /// Работа с сервером приложения
         /// </summary>
         /// <remarks>Время ожидания ответа 2 секунды</remarks>
-        public APIServer() { }
+        public APIServer() 
+        {
+            client = new TcpClient();
+        }
 
         /// <summary>
         /// Удаление продукта
