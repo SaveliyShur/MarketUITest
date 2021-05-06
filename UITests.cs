@@ -46,7 +46,6 @@ namespace MarketUITest
             driver.FindElementByAccessibilityId("insertTextBoxName").SendKeys(name);
             driver.FindElementByAccessibilityId("insertTextBoxPrice").SendKeys(price);
             driver.FindElementByAccessibilityId("changeButton").Click();
-            Thread.Sleep(1000);
             server.delete(name, price); //We ask the server to delete our object (you can delete it using the UI, but it's more cool)
             Assert.AreEqual("True", server.ReceiveMessage());
         }
@@ -65,7 +64,7 @@ namespace MarketUITest
             {
                 texts.Add(item.Text);
             }
-            Assert.IsTrue(texts.Contains("1 мюсли 89"), "Не содержит элемента для теста");
+            Assert.IsTrue(texts.Contains("1 musli 89"), "Don't repeat. No data.");
 
             /// We change item
             driver.FindElementByName("UPDATE").Click();
@@ -84,12 +83,12 @@ namespace MarketUITest
             {
                 texts.Add(item.Text);
             }
-            Assert.IsTrue(texts.Contains("1 " + name + " " + price), "Элемент не изменился");
+            Assert.IsTrue(texts.Contains("1 " + name + " " + price), "Item didn't change");
 
             //Change the element back(what was done in the last test using the server side)
             driver.FindElementByName("UPDATE").Click();
             driver.FindElementByAccessibilityId("textBoxIdUpdate").SendKeys("1");
-            driver.FindElementByAccessibilityId("updateTextboxName").SendKeys("мюсли");
+            driver.FindElementByAccessibilityId("updateTextboxName").SendKeys("musli");
             driver.FindElementByAccessibilityId("updateTextboxPrice").SendKeys("89");
             driver.FindElementByAccessibilityId("updateButton").Click();
         }
