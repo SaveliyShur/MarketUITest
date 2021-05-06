@@ -6,6 +6,7 @@
 2. Установите драйвер
 3. Включите [режим разработчика](https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development) в настройках Windows 
 4. Запустить `WinAppDriver.exe` из установочного каталога (например `C:\Program Files (x86)\Windows Application Driver`)
+5. Переключить язык раскладки на английский (для правильной вставки)  
 
 Будет поднят драйвер с IP адресом и портом `127.0.0.1:4723`.  
 Затем следует скомпилировать приложение, для которого написаны тесты, в данном случае наше приложение [здесь](https://github.com/SaveliyShur/Market). Выкачайте код и поменяете
