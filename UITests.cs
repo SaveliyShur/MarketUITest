@@ -6,6 +6,7 @@ using OpenQA.Selenium.Appium.Windows;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace MarketUITest
@@ -91,6 +92,57 @@ namespace MarketUITest
             driver.FindElementByAccessibilityId("updateTextboxName").SendKeys("musli");
             driver.FindElementByAccessibilityId("updateTextboxPrice").SendKeys("89");
             driver.FindElementByAccessibilityId("updateButton").Click();
+        }
+
+        [Test]
+        public void TestDelete()
+        {
+            string name = "TestDelete";
+            string price = "423425";
+
+            //Insert our item for delete
+            driver.FindElementByName("INSERT").Click();
+            driver.FindElementByAccessibilityId("insertTextBoxName").SendKeys(name);
+            driver.FindElementByAccessibilityId("insertTextBoxPrice").SendKeys(price);
+            driver.FindElementByAccessibilityId("changeButton").Click();
+
+            //We check insert item and get it's ID
+            driver.FindElementByName("SELECT").Click();
+            AppiumWebElement listView = driver.FindElementByAccessibilityId("listBoxSelect");
+            listView.Click();
+            IList<AppiumWebElement> items = listView.FindElementsByXPath(".//child::*");
+            List<string> texts = new List<string>();
+            foreach (AppiumWebElement item in items)
+            {
+                texts.Add(item.Text);
+            }
+            List<string> filteredList = texts.Where(x => x.Contains(name)).ToList();
+            Assert.AreEqual(1, filteredList.Count, "Not 1 element");
+
+            string deleteString = filteredList[0];
+            string subString = " " + name + " " + price;
+            int n = deleteString.IndexOf(subString);
+            string id = deleteString.Remove(n, subString.Length);
+
+            Console.WriteLine("ID = " + id);
+
+            //delete our item
+            driver.FindElementByName("DELETE").Click(); 
+            driver.FindElementByAccessibilityId("deleteTextboxID").SendKeys(id); 
+            driver.FindElementByAccessibilityId("deleteButton").Click();
+
+            //check delete sucsess
+            driver.FindElementByName("SELECT").Click();
+            listView = driver.FindElementByAccessibilityId("listBoxSelect");
+            listView.Click();
+            items = listView.FindElementsByXPath(".//child::*");
+            texts = new List<string>();
+            foreach (AppiumWebElement item in items)
+            {
+                texts.Add(item.Text);
+            }
+            filteredList = texts.Where(x => x.Contains(name + " " + price)).ToList();
+            Assert.AreEqual(0, filteredList.Count, "Not delete");
         }
 
         [TearDown]
