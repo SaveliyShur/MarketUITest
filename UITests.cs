@@ -15,7 +15,7 @@ namespace MarketUITest
     public class UITests
     {
         private const string WindowsAppDriverUrl = "http://127.0.0.1:4723";
-        private const string AppPath = @"D:\Ñ#\MyWork\bin\Debug\MarketWorkBD.exe";
+        private const string AppPath = @"D:\C#\MyWork\bin\Debug\MarketWorkBD.exe";
 
         private static WindowsDriver<WindowsElement> driver;
         private static APIServer server;
